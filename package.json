@@ -1,0 +1,16 @@
+{
+  "name": "countdown-bot",
+  "version": "1.0.0",
+  "description": "Countdown bot for Discord",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bot.js"
+  },
+  "author": "Kavishankar",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  },
+  "keywords": []
+}
