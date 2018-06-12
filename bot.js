@@ -19,7 +19,7 @@ bot.on("message", message => {
     if(message.channel.type != "text") return;
     if(message.author.bot) return;
 
-    if(message.mentions.members.first().id == config.USER_ID)
+    if((message.content.startsWith("~>chain ") || message.content.startsWith("->chain ")) && message.mentions.members.first().id == config.USER_ID)
     {
         count_channel.name = count_channel.name + 1;
     }
