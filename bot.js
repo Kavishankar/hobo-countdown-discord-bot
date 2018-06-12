@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const config = require("./config.json");
 const bot = new Discord.Client();
 
-let count_channel = bot.channels.get(config.CHANNEL_ID);
 var everyone = /\@everyone/;
 
 bot.on("ready", () => {
@@ -21,12 +20,15 @@ bot.on("message", message => {
 
     if((message.content.startsWith("~>chain ") || message.content.startsWith("->chain ")) && message.mentions.members.first().id == config.USER_ID)
     {
-        count_channel.name = count_channel.name + 1;
+        let count = bot.channels.get(config.CHANNEL_ID).name;
+        bot.channels.get(config.CHANNEL_ID).edit({name: (parseInt(count)+1).toString()});
+        console.log("Up!");
     }
 
     else if(message.author.id == config.USER_ID && message.content.toLowerCase().indexOf("morning") != -1 && everyone.test(message.content))
     {
-        count_channel.name = 0;
+        bot.channels.get(config.CHANNEL_ID).edit({name: "0"});
+        console.log("Down!");
     }
 
 });
