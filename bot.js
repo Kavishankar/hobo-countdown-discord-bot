@@ -2,29 +2,33 @@ const Discord = require("discord.js");
 const config = require("./config.json");
 const bot = new Discord.Client();
 
-function sendDate(bot){
-    var t2 = new Date(config.YEAR, config.MONTH, config.DAY);
-    var t1 = new Date();
-    var diff = parseInt(((t2-t1)/1000)- (30*24*60*60));
-    if(diff>0)
-        var new_name = diff + "secs";
-    else if(diff == 0)
-        var new_name = config.MSG;
-    else
-        return;
-    if(bot.channels.get(config.ID))
-        bot.channels.get(config.ID).edit({name: new_name});
-}
+let count_channel = bot.channels.get(config.CHANNEL_ID);
+var everyone = /\@everyone/;
 
 bot.on("ready", () => {
     console.log("Logged in as "+bot.user.username);
-    bot.user.setActivity('Party Organiser!', { type: 'PLAYING' });
-    setInterval(sendDate,1000,bot);
-
+    bot.user.setActivity('out for Chains!', { type: 'WATCHING' });
 });
 
 bot.on("error", err => {
     console.error(err);
+});
+
+bot.on("message", message => {
+
+    if(message.channel.type != "text") return;
+    if(message.author.bot) return;
+
+    if(message.mentions.members.first().id == config.USER_ID)
+    {
+        count_channel.name = count_channel.name + 1;
+    }
+
+    else if(message.author.id == config.USER_ID && message.content.toLowerCase().indexOf("morning") != -1 && everyone.test(message.content))
+    {
+        count_channel.name = 0;
+    }
+
 });
 
 bot.login(process.env.BOT_TOKEN);
